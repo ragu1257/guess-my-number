@@ -5,7 +5,11 @@ document.querySelector('.number').textContent = guessNumber
 let score = 20
 let highscore = 0
 
-document.querySelector('.check').addEventListener('click', function () {
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const btnCloseModal = document.querySelector('.close-modal')
+
+const validateResult = function () {
     const guess = Number(document.querySelector('.guess').value);
     if(!guess){
         document.querySelector('.message').textContent = '⛔ No Number!';
@@ -27,9 +31,14 @@ document.querySelector('.check').addEventListener('click', function () {
             highscore = score
             document.querySelector('.highscore').textContent = highscore
         }
+
+        modal.classList.remove('hidden')
+        overlay.classList.remove('hidden')
     }
 
-});
+}
+
+document.querySelector('.check').addEventListener('click', validateResult);
 
 document.querySelector('.again').addEventListener('click', function(){
     score = 20
@@ -40,4 +49,13 @@ document.querySelector('.again').addEventListener('click', function(){
     document.querySelector('.score').textContent = score
     document.querySelector('body').style.backgroundColor = '#222'
     document.querySelector('.number').style.width = '15rem'
+    modal.classList.add('hidden')
+    overlay.classList.add('hidden')
+})
+
+
+document.addEventListener('keypress', function(e){  
+    if(e.key === 'Enter'){
+        validateResult()
+    }
 })
